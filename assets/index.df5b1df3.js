@@ -1,0 +1,5 @@
+(function(){const o=document.createElement("link").relList;if(o&&o.supports&&o.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))l(e);new MutationObserver(e=>{for(const t of e)if(t.type==="childList")for(const r of t.addedNodes)r.tagName==="LINK"&&r.rel==="modulepreload"&&l(r)}).observe(document,{childList:!0,subtree:!0});function n(e){const t={};return e.integrity&&(t.integrity=e.integrity),e.referrerpolicy&&(t.referrerPolicy=e.referrerpolicy),e.crossorigin==="use-credentials"?t.credentials="include":e.crossorigin==="anonymous"?t.credentials="omit":t.credentials="same-origin",t}function l(e){if(e.ep)return;e.ep=!0;const t=n(e);fetch(e.href,t)}})();let c;const s=document.getElementById("webcam");async function a(){console.log("Loading mobilenet.."),c=await mobilenet.load(),console.log("Successfully loaded model");const i=await tf.data.webcam(s);for(;;){const o=await i.capture(),n=await c.classify(o);document.getElementById("console").innerText=`
+      prediction: ${n[0].className}
+
+      probability: ${n[0].probability}
+    `,o.dispose(),await tf.nextFrame()}}a();
